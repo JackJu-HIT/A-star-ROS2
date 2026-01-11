@@ -16,7 +16,7 @@
 ```bash
 cd ~/ros2_ws/src
 # 克隆代码到此处 
-# git clone [<your-repo-url>](https://github.com/JackJu-HIT/A-star-ROS2.git)
+# git clone https://github.com/JackJu-HIT/A-star-ROS2.git
 
 cd ~/ros2_ws
 colcon build 
