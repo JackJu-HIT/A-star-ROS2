@@ -49,10 +49,9 @@ ros2 run a_star_planner a_star_plan
 ### 2. 启动 RViz2 可视化
 在新的终端中运行：
 ```bash
-rviz2 -d src/A-star-ROS2/a_star_planner/config/default.rviz
+rviz2 
 ```
 *(注：如果项目提供了配置文件，直接加载即可；否则需手动添加以下话题)*
-
 ---
 
 ## 📊 话题接口 (Topics)
