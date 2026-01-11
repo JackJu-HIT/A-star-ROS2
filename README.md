@@ -1,73 +1,98 @@
+# A-Star-ROS2: 机器人自主避障寻路算法
 
-# A-Star-ROS2
+[![ROS 2 Humble](https://img.shields.io/badge/ROS%202-Humble-blue)](https://docs.ros.org/en/humble/index.html)
+[![Language-C++](https://img.shields.io/badge/Language-C%2B%2B-red)](https://en.cppreference.com/)
+[![License-MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
-**基于 ROS 2 的 A* 自主避障寻路算法**
+> **本项目基于 ROS 2 框架实现了高效的 A* (A-Star) 路径规划器。** 它能够实时处理环境中的障碍物信息（栅格地图/点云），并生成一条安全、最优的自主避障路径，适用于轮式机器人、无人机等移动平台的局部或全局规划。
 
-> 🚀 本项目基于 ROS 2 框架实现了 A* (A-Star) 路径规划器，能够在已知障碍物环境（如栅格地图或点云）下进行自主避障与最优路径生成。
+---
 
-## 📦 环境依赖 (Prerequisites)
+## 📦 环境要求 (Prerequisites)
 
-*   **OS**: Ubuntu 20.04 / 22.04
-*   **ROS 2**: Humble / Foxy / Iron
-*   **Visualization**: RViz2
+*   **操作系统**: Ubuntu 22.04 (推荐) / 20.04
+*   **ROS 2 版本**: Humble (推荐) / Foxy
+*   **依赖库**: 
+    *   [Eigen 3](https://eigen.tuxfamily.org/)
+    *   PCL (Point Cloud Library)
+    *   Standard ROS 2 geometry/nav messages
+
+---
 
 ## 🛠️ 编译与构建 (Build)
 
-请确保您已创建了 ROS 2 工作空间（workspace），并将本项目克隆到 `src` 目录下：
-
 ```bash
-# 1. 进入工作空间的 src 目录
+# 1. 创建并进入工作空间
+mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 
-# 2. 克隆代码
+# 2. 克隆本项目
 git clone https://github.com/JackJu-HIT/A-star-ROS2.git
 
-# 3. 返回工作空间根目录并编译
+# 3. 编译指定包
 cd ~/ros2_ws
-colcon build --packages-select a_star_planner
+colcon build --symlink-install --packages-select a_star_planner
 
-# 4. 设置环境变量
+# 4. 激活环境
 source install/setup.bash
 ```
 
-## 🚀 运行指南 (Usage)
+---
 
-请按照以下顺序启动节点和可视化工具：
+## 🚀 快速启动 (Quick Start)
 
-### 1. 启动路径规划节点
+### 1. 运行路径规划节点
 ```bash
-# 推荐使用 ros2 run 方式运行
 ros2 run a_star_planner a_star_plan
 ```
 
-### 2. 启动可视化界面
-打开一个新的终端（**注意：新终端也需要 source 环境**）：
+### 2. 启动 RViz2 可视化
+在新的终端中运行：
 ```bash
-cd ~/ros2_ws
-source install/setup.bash
-rviz2
+rviz2 -d src/A-star-ROS2/a_star_planner/config/default.rviz
 ```
-*建议加载项目目录下的 `.rviz` 配置文件（如有），以便正确显示 Marker 和 Topic。*
+*(注：如果项目提供了配置文件，直接加载即可；否则需手动添加以下话题)*
 
-### 3. 初始化与规划
-1.  **加载环境**：节点启动后，程序会自动加载默认的全局轨迹与障碍物信息。
-2.  **设置起点**：在 RViz 工具栏中点击 **2D Pose Estimate**。
-3.  **触发规划**：在地图可行区域点击设置机器人的初始位置，算法将自动计算并生成避障路径。
+---
+
+## 📊 话题接口 (Topics)
+
+| 话题名称 | 消息类型 | 说明 |
+| :--- | :--- | :--- |
+| `/visual_local_trajectory` | `nav_msgs/Path` | **规划结果**：A* 算法生成的最终避障轨迹 |
+| `/visual_global_path` | `nav_msgs/Path` | **全局基准**：起始点到终点的原始参考直线 |
+| `/visual_local_obstacles` | `sensor_msgs/PointCloud2` | **环境感知**：当前规划器识别到的局部障碍物点云 |
+| `/initialpose` | `geometry_msgs/PoseWithCovarianceStamped` | **交互接口**：通过 RViz 接收机器人起点位置 |
+
+---
+
+## 🎮 操作说明 (Usage)
+
+1.  **加载地图**：启动节点后，系统会默认生成虚拟障碍物环境。
+2.  **设置起点**：点击 RViz 工具栏顶部的 **"2D Pose Estimate"** 按钮。
+3.  **生成路径**：在地图上任意可行区域（空白处）点击，规划器将以此点作为起点，自动计算避障路径并实时发布。
+4.  **调整环境**：可以通过配置文件动态调整障碍物膨胀半径（Inflation Radius）以适应不同尺寸的机器人。
+
+---
 
 ## 📸 运行效果 (Results)
 
 ![A* 算法运行效果图](https://github.com/JackJu-HIT/A-star-ROS2/blob/master/a_star_planner/results.png?raw=true)
 
+---
+
 ## 🙌 致谢 (Acknowledgements)
 
-本项目核心算法逻辑参考并修改自以下优秀的开源项目，特此致谢：
+本项目的开发参考了以下优秀开源项目，在此表示由衷的感谢：
 
-*   **Ego-Planner**: [ZJU-FAST-Lab/ego-planner](https://github.com/ZJU-FAST-Lab/ego-planner)
+*   **EGO-Planner**:  [ZJU-FAST-Lab/ego-planner](https://github.com/ZJU-FAST-Lab/ego-planner)
 
-## 💬 关注与交流 (Contact)
+---
 
-如果您对机器人规划控制感兴趣，欢迎关注我的频道获取更多技术分享：
+## 💬 交流与反馈 (Contact)
 
-*   📱 **微信公众号**：机器人规划与控制研究所
-*   📺 **Bilibili**：[机器人算法研究所](https://space.bilibili.com/your-uid-here) *(建议此处替换为您的B站主页链接)*
+如果您对机器人**规划、控制**感兴趣，欢迎通过以下方式交流学习：
 
+*   📱 **微信公众号**：[机器人规划与控制研究所](https://mp.weixin.qq.com/s/DnsGCi86n4Fzjbb18bKR3g) - 分享前沿算法与工程实践。
+*   📺 **Bilibili**：[机器人算法研究所](https://space.bilibili.com/3493138800925925) 
+*   📧 **Email**: [juchunyu@qq.com]
