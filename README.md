@@ -1,25 +1,32 @@
 
-
 # A-Star-ROS2
+
 **基于 ROS 2 的 A* 自主避障寻路算法**
 
-这是一个基于 ROS 2 框架实现的 A* (A-Star) 路径规划器，支持在已知障碍物环境下的自主避障与路径生成。
+> 🚀 本项目基于 ROS 2 框架实现了 A* (A-Star) 路径规划器，能够在已知障碍物环境（如栅格地图或点云）下进行自主避障与最优路径生成。
 
-## 📦 环境依赖
-*   **ROS 2** (Humble/Foxy/Iron 等)
-*   **RViz2**
+## 📦 环境依赖 (Prerequisites)
+
+*   **OS**: Ubuntu 20.04 / 22.04
+*   **ROS 2**: Humble / Foxy / Iron
+*   **Visualization**: RViz2
 
 ## 🛠️ 编译与构建 (Build)
 
-请确保你已创建了 ROS 2 工作空间（workspace），并将本项目放入 `src` 目录下：
+请确保您已创建了 ROS 2 工作空间（workspace），并将本项目克隆到 `src` 目录下：
 
 ```bash
+# 1. 进入工作空间的 src 目录
 cd ~/ros2_ws/src
-# 克隆代码到此处 
-# git clone https://github.com/JackJu-HIT/A-star-ROS2.git
 
+# 2. 克隆代码
+git clone https://github.com/JackJu-HIT/A-star-ROS2.git
+
+# 3. 返回工作空间根目录并编译
 cd ~/ros2_ws
-colcon build 
+colcon build --packages-select a_star_planner
+
+# 4. 设置环境变量
 source install/setup.bash
 ```
 
@@ -31,29 +38,36 @@ source install/setup.bash
 ```bash
 # 推荐使用 ros2 run 方式运行
 ros2 run a_star_planner a_star_plan
-
-# 或者直接运行编译后的二进制文件 (不推荐)
-# ./build/a_star_planner/a_star_plan
 ```
 
 ### 2. 启动可视化界面
-打开一个新的终端并运行 RViz2：
+打开一个新的终端（**注意：新终端也需要 source 环境**）：
 ```bash
+cd ~/ros2_ws
+source install/setup.bash
 rviz2
 ```
+*建议加载项目目录下的 `.rviz` 配置文件（如有），以便正确显示 Marker 和 Topic。*
 
-### 3. 配置地图与障碍物
-在节点运行后，程序会加载默认的全局轨迹与障碍物信息（或通过参数文件/代码配置）。
-
-### 4. 设置起始点
-在 RViz 工具栏中使用 **2D Pose Estimate** 工具点击地图，设置机器人的初始位置，算法将自动开始规划路径。
+### 3. 初始化与规划
+1.  **加载环境**：节点启动后，程序会自动加载默认的全局轨迹与障碍物信息。
+2.  **设置起点**：在 RViz 工具栏中点击 **2D Pose Estimate**。
+3.  **触发规划**：在地图可行区域点击设置机器人的初始位置，算法将自动计算并生成避障路径。
 
 ## 📸 运行效果 (Results)
 
 ![A* 算法运行效果图](https://github.com/JackJu-HIT/A-star-ROS2/blob/master/a_star_planner/results.png?raw=true)
 
-## 更多信息
+## 🙌 致谢 (Acknowledgements)
 
-微信公众号：机器人规划与控制研究所
+本项目核心算法逻辑参考并修改自以下优秀的开源项目，特此致谢：
 
-b站：机器人算法研究所   
+*   **Ego-Planner**: [ZJU-FAST-Lab/ego-planner](https://github.com/ZJU-FAST-Lab/ego-planner)
+
+## 💬 关注与交流 (Contact)
+
+如果您对机器人规划控制感兴趣，欢迎关注我的频道获取更多技术分享：
+
+*   📱 **微信公众号**：机器人规划与控制研究所
+*   📺 **Bilibili**：[机器人算法研究所](https://space.bilibili.com/your-uid-here) *(建议此处替换为您的B站主页链接)*
+
