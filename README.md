@@ -51,3 +51,9 @@ rviz2
 ## 📸 运行效果 (Results)
 
 ![A* 算法运行效果图](https://github.com/JackJu-HIT/A-star-ROS2/blob/master/a_star_planner/results.png?raw=true)
+
+## 更多信息
+
+微信公众号：机器人规划与控制研究所
+
+b站：机器人算法研究所   
