@@ -4,7 +4,7 @@
 [![Language-C++](https://img.shields.io/badge/Language-C%2B%2B-red)](https://en.cppreference.com/)
 [![License-MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
-> **本项目基于 ROS 2 框架实现了高效的 A* (A-Star) 路径规划器。** 它能够实时处理环境中的障碍物信息（栅格地图/点云），并生成一条安全、最优的自主避障路径，适用于轮式机器人、无人机等移动平台的局部或全局规划。
+> **本项目基于 ROS 2 框架实现了高效的 A* (A-Star) 路径规划器。** 它能够实时处理环境中的障碍物信息（栅格地图/点云），并生成一条安全、最优的自主避障路径，适用于轮式机器人平台的局部或全局规划。
 
 ---
 
