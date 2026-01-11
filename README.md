@@ -69,9 +69,9 @@ rviz2 -d src/A-star-ROS2/a_star_planner/config/default.rviz
 ## 🎮 操作说明 (Usage)
 
 1.  **加载地图**：启动节点后，系统会默认生成虚拟障碍物环境。
-2.  **设置起点**：点击 RViz 工具栏顶部的 **"2D Pose Estimate"** 按钮。
-3.  **生成路径**：在地图上任意可行区域（空白处）点击，规划器将以此点作为起点，自动计算避障路径并实时发布。
-4.  **调整环境**：可以通过配置文件动态调整障碍物膨胀半径（Inflation Radius）以适应不同尺寸的机器人。
+2.  **设置路径**：通过publish在rviz中点击两个点，生成参考路径。
+3.  **设置障碍物**：通过rviz goal pose在rviz中添加障碍物信息。。
+4.  **设置起点**：点击 RViz 工具栏顶部的 **"2D Pose Estimate"** 按钮。
 
 ---
 
