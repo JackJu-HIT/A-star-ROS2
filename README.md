@@ -31,7 +31,7 @@ git clone https://github.com/JackJu-HIT/A-star-ROS2.git
 
 # 3. 编译指定包
 cd ~/ros2_ws
-colcon build --symlink-install --packages-select a_star_planner
+colcon build
 
 # 4. 激活环境
 source install/setup.bash
